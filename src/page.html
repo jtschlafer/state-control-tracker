@@ -97,7 +97,6 @@ th[aria-sort=descending] .sct-sort::after{content:" \2193";opacity:1}
 <th class="sct-th sct-shh" data-field="house_shift" aria-sort="none"><button class="sct-sort" data-key="house_shift">House Shift</button></th>
 <th class="sct-th sct-shh" data-field="senate_shift" aria-sort="none"><button class="sct-sort" data-key="senate_shift">Senate Shift</button></th>
 <th class="sct-th sct-smh" data-field="supermaj" aria-sort="none"><button class="sct-sort" data-key="supermaj">SuperMaj</button></th>
-<th class="sct-th" data-source="changes" data-field="changes" aria-sort="none"><button class="sct-sort" data-key="changes">Changes</button></th>
 <th class="sct-nh" data-field="note">Notes</th>
 </tr></thead>
 <tbody data-draw="rows"></tbody>
@@ -120,26 +119,19 @@ dash.calc('tri_counts', {
       gov_flips: flips('gov'), chamber_flips: flips('house') + flips('senate')}];
   }
 });
-dash.calc('changes', {
-  inputs: ['states'],
-  title: 'Offices changing party',
-  description: 'For each state, how many of governor, house and senate change party.',
-  fn: (states) => states.map((s) => ({state: s.state, changes: ['gov', 'house', 'senate'].filter((k) => s[k] !== s[k + '_prev']).length}))
-});
 dash.draw('cnt', (el) => {
   const d = dash.data('tri_counts');
   const r = d.status === 'ok' && d.data && d.data[0];
   el.textContent = r ? String(r[el.dataset.field]) : '—';
 });
 window.SCT.view = () => {
-  const d = dash.data('states'), c = dash.data('changes');
+  const d = dash.data('states');
   if (d.status !== 'ok') return null;
-  const ch = new Map((c.status === 'ok' ? c.data : []).map((r) => [r.state, Number(r.changes)]));
   const S = window.SCT, q = S.q.trim().toLowerCase();
   const isNew = (r) => r.trifecta !== r.trifecta_prev && r.trifecta !== 'Divided';
   const lost = (r) => r.trifecta_prev !== 'Divided' && r.trifecta !== r.trifecta_prev;
   const lead = (r) => [r.gov_status, r.house_status, r.senate_status].includes('leading');
-  let rows = d.data.map((r) => Object.assign({}, r, {chg: ch.get(r.state) || 0}));
+  let rows = d.data.map((r) => Object.assign({}, r, {chg: ['gov', 'house', 'senate'].filter((k) => r[k] !== r[k + '_prev']).length}));
   rows = rows.filter((r) => {
     if (S.filter === 'changes' && !(r.chg > 0 || r.trifecta !== r.trifecta_prev)) return false;
     if (S.filter === 'tri' && !(r.trifecta === 'Dem' || r.trifecta === 'Rep')) return false;
@@ -159,7 +151,6 @@ window.SCT.view = () => {
   rows.sort((a, b) => {
     let v = 0;
     if (S.key === 'state') v = a.state.localeCompare(b.state);
-    else if (S.key === 'changes') v = a.chg - b.chg;
     else if (S.key === 'house_shift' || S.key === 'senate_shift') {
       const an = a[S.key + '_n'], bn = b[S.key + '_n'];
       if (an == null || bn == null) return (an == null) - (bn == null) || a.state.localeCompare(b.state);
@@ -197,8 +188,7 @@ dash.draw('rows', (tb) => {
     tr.append(td(r.state, sc), td(r.gov, pc(r.gov, r.gov_prev, r.gov_status)), td(r.house, pc(r.house, r.house_prev, r.house_status) + (r.house_sm ? ' sct-b' : '')),
       td(r.senate, pc(r.senate, r.senate_prev, r.senate_status) + (r.senate_sm ? ' sct-b' : '')),
       td(r.house_shift || '\u2014', shc(r.house_shift_n, r.house_shift_status)), td(r.senate_shift || '\u2014', shc(r.senate_shift_n, r.senate_shift_status)),
-      td(r.supermaj || 'None', 'sct-sm' + ((r.supermaj || 'None') === 'None' ? ' sct-o' : '') + (r.supermaj_status === 'expected' ? ' sct-exp' : '')),
-      td(String(r.chg), r.chg ? '' : 'sct-o'), td(r.note || '', 'sct-note'));
+      td(r.supermaj || 'None', 'sct-sm' + ((r.supermaj || 'None') === 'None' ? ' sct-o' : '') + (r.supermaj_status === 'expected' ? ' sct-exp' : '')), td(r.note || '', 'sct-note'));
     tb.append(tr);
   }
 });
@@ -212,7 +202,7 @@ dash.draw('total', (el) => {
 });
 document.querySelectorAll('.sct-sort').forEach((b) => b.addEventListener('click', () => {
   const S = window.SCT, k = b.dataset.key;
-  if (S.key === k) S.dir *= -1; else { S.key = k; S.dir = k === 'changes' ? -1 : 1; }
+  if (S.key === k) S.dir *= -1; else { S.key = k; S.dir = 1; }
   document.querySelectorAll('.sct-th').forEach((th) => {
     const own = th.querySelector('.sct-sort');
     th.setAttribute('aria-sort', own && own.dataset.key === k ? (S.dir > 0 ? 'ascending' : 'descending') : 'none');

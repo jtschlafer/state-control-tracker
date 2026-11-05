@@ -58,7 +58,6 @@ window.SCTXL = (() => {
       {f: 'house_shift', w: 13, sh: 1, cell: (r) => shift(r.house_shift, r.house_shift_n, r.house_shift_status)},
       {f: 'senate_shift', w: 13, sh: 1, cell: (r) => shift(r.senate_shift, r.senate_shift_n, r.senate_shift_status)},
       {f: 'supermaj', w: 30, sm: 1, cell: (r) => { const t = r.supermaj || 'None'; return {v: t + (r.supermaj_status === 'expected' ? '°' : ''), s: st(t === 'None' ? 9 : 0)}; }},
-      {f: 'changes', w: 10, cell: (r) => ({v: Number(r.chg) || 0, num: 1, s: st(r.chg ? 0 : 9)})},
       {f: 'note', w: 90, cell: (r) => ({v: r.note || '', s: st(0, 0, 1)})},
     ].filter((c) => !(c.sh && o.hideSh) && !(c.sm && o.hideSm));
     const H = 5;
