@@ -25,6 +25,30 @@
 .sct-xl{padding:5px 10px;border:1px solid var(--color-fg);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer}.sct-xl:disabled{opacity:.5;cursor:default}
 .sct-count{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-sm)}.sct-count b{color:var(--color-fg);font-weight:500}
 .sct-xl-msg{font-size:var(--cds-font-size-caption);color:var(--color-warn)}
+.sct-mapb{padding:5px 10px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer}
+.sct-mapb[aria-pressed=true]{background:var(--color-fg);color:var(--color-bg);border-color:var(--color-fg)}
+.sct-map{border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md);margin:0 0 var(--cds-gap-md)}
+.sct-map-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--cds-gap-sm);margin:0 0 var(--cds-gap-sm)}
+.sct-map-head h3{font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium);margin:0;flex:1 1 auto}
+.sct-map-x{all:unset;cursor:pointer;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);padding:2px 6px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius)}
+.sct-map-key{display:flex;flex-wrap:wrap;gap:var(--cds-gap-xs) var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-sm)}
+.sct-map-key span{display:inline-flex;align-items:center;gap:var(--cds-gap-xs)}
+.sct-msw{display:inline-block;width:14px;height:12px;border-radius:2px;border:1px solid var(--color-border-line)}
+.sct-map-svg{display:block;width:100%;height:auto;max-width:980px;margin:0 auto}
+.sct-map-svg .sct-m-s{stroke:var(--color-panel);stroke-width:1;cursor:pointer;outline:none}
+.sct-map-svg .sct-m-g:hover .sct-m-s,.sct-map-svg .sct-m-g:focus .sct-m-s,.sct-map-svg .sct-m-g.sct-m-on .sct-m-s{stroke:var(--color-fg);stroke-width:2}
+.sct-map-svg .sct-m-g{outline:none}
+.sct-m-dnew{fill:#1f5fa8;background:#1f5fa8}.sct-m-rnew{fill:#a32d2d;background:#a32d2d}
+.sct-m-dold{fill:color-mix(in srgb,#2c6fbf 42%,var(--color-panel));background:color-mix(in srgb,#2c6fbf 42%,var(--color-panel))}
+.sct-m-rold{fill:color-mix(in srgb,#c0392b 42%,var(--color-panel));background:color-mix(in srgb,#c0392b 42%,var(--color-panel))}
+.sct-m-div{fill:color-mix(in srgb,var(--color-fg) 14%,var(--color-panel));background:color-mix(in srgb,var(--color-fg) 14%,var(--color-panel))}
+.sct-m-hsw{background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--color-fg) 14%,var(--color-panel)) 0 3px,var(--color-fg-muted) 3px 4px)}
+.sct-map-svg .sct-m-lab{font-family:var(--font-anthropic-sans);font-size:11px;font-weight:500;text-anchor:middle;dominant-baseline:central;fill:var(--color-fg);pointer-events:none}
+.sct-map-svg .sct-m-lab.sct-m-tn{fill:#fff}
+.sct-map-svg .sct-m-ln{stroke:var(--color-fg-muted);stroke-width:.75;pointer-events:none}
+.sct-map-svg .sct-m-hatch{pointer-events:none}
+.sct-map-info{font-size:var(--cds-font-size-caption);color:var(--color-fg);margin:var(--cds-gap-xs) 0 0;min-height:1.3em}
+@container (max-width: 560px){.sct-map-svg .sct-m-lab{display:none}}
 .sct-tog[aria-pressed=true]{background:var(--color-panel);border-color:var(--color-fg)}
 .sct-tog::before{content:"\2610  "}.sct-tog[aria-pressed=true]::before{content:"\2611  "}
 .sct-f[aria-pressed=true]{background:var(--color-fg);color:var(--color-bg)}
@@ -82,9 +106,23 @@ th[aria-sort=descending] .sct-sort::after{content:" \2193";opacity:1}
 <button class="sct-f" data-filter="uncalled" aria-pressed="false">Not yet called</button>
 <button class="sct-tog" data-hide="sct-hide-sm" aria-pressed="true">SuperMaj column</button>
 <button class="sct-tog sct-tog2" data-hide="sct-hide-sh" aria-pressed="true">Shift</button>
+<button class="sct-mapb" aria-pressed="false" aria-controls="sct-map" title="Show a US map with each state colored by its projected trifecta">Trifecta map</button>
 <button class="sct-party" title="Cycles Both / Rep only / Dem only. Works with any view: in Trifectas lost it uses the party that lost the trifecta; in All trifectas, New trifectas and Trifecta + SuperMaj, the trifecta party; elsewhere, states where that party holds the governorship or either chamber."><span data-p="both">Party: Both</span><span data-p="Rep" hidden>Party: Rep only</span><span data-p="Dem" hidden>Party: Dem only</span></button>
 <button class="sct-xl" title="Download the rows and columns now showing (current view, party, search and sort) as an Excel workbook">Export to Excel</button>
 <span class="sct-xl-msg" hidden>Download isn't available in this view.</span>
+</div>
+<div class="sct-map" id="sct-map" hidden>
+<div class="sct-map-head"><h3>Projected trifectas after the Nov. 3 election</h3><button class="sct-map-x" aria-label="Close trifecta map">Close</button></div>
+<div class="sct-map-key">
+<span><span class="sct-msw sct-m-dnew"></span>New Dem trifecta</span>
+<span><span class="sct-msw sct-m-dold"></span>Dem trifecta kept</span>
+<span><span class="sct-msw sct-m-rnew"></span>New Rep trifecta</span>
+<span><span class="sct-msw sct-m-rold"></span>Rep trifecta kept</span>
+<span><span class="sct-msw sct-m-div"></span>Divided</span>
+<span><span class="sct-msw sct-m-hsw"></span>Hatched = trifecta status turns on a race not yet called</span>
+<span>Nebraska's nonpartisan unicameral counts as Rep (Ballotpedia convention)</span>
+</div>
+<div class="sct-map-draw" data-draw="map" data-source="states">—</div>
 </div>
 <p class="sct-count">Showing <b data-draw="shown" data-source="states">—</b> of <span data-draw="total" data-source="states">—</span> states</p>
 <div class="sct-box">
@@ -105,6 +143,7 @@ th[aria-sort=descending] .sct-sort::after{content:" \2193";opacity:1}
 </section>
 </div>
 <script src="xl.js"></script>
+<script src="usmap.js"></script>
 <script>
 window.SCT = {key: 'state', dir: 1, filter: 'all', q: '', party: 'both'};
 dash.calc('tri_counts', {
@@ -192,6 +231,67 @@ dash.draw('rows', (tb) => {
     tb.append(tr);
   }
 });
+dash.draw('map', (el) => {
+  el.replaceChildren();
+  const d = dash.data('states'), M = window.SCTMAP;
+  if (d.status !== 'ok' || !M) { el.textContent = '—'; return; }
+  const by = {};
+  d.data.forEach((r) => { by[r.state] = r; });
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, at) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); return e; };
+  const kind = (r) => (r.trifecta === 'Dem' || r.trifecta === 'Rep') ? (r.trifecta === 'Dem' ? 'd' : 'r') + (r.trifecta !== r.trifecta_prev ? 'new' : 'old') : 'div';
+  const pend = (r) => [r.gov_status, r.house_status, r.senate_status].includes('leading');
+  const tri = (g, h, s) => (g === 'Dem' || g === 'Rep') && ((h === g && s === g) || (h === 'Unicameral' && g === 'Rep')) ? g : 'Divided';
+  const other = (v) => v === 'Dem' ? 'Rep' : v === 'Rep' ? 'Dem' : v;
+  const hinge = (r) => ['gov', 'house', 'senate'].some((k) => {
+    if (r[k + '_status'] !== 'leading') return false;
+    const f = Object.assign({}, r, {[k]: other(r[k])});
+    return tri(f.gov, f.house, f.senate) !== r.trifecta;
+  });
+  const word = {Dem: 'Democratic', Rep: 'Republican'};
+  const mark = (s) => s === 'leading' ? '*' : s === 'not_up' ? '†' : s === 'expected' ? '°' : '';
+  const say = (r) => {
+    const t = r.trifecta, p = r.trifecta_prev;
+    let what = (t === 'Dem' || t === 'Rep') ? (t !== p ? 'new ' + word[t] + ' trifecta' : word[t] + ' trifecta kept') : 'divided government' + (p === 'Dem' || p === 'Rep' ? ' (' + word[p] + ' trifecta lost)' : '');
+    return r.state + ': ' + what + ' · Governor ' + r.gov + mark(r.gov_status) + ', House ' + r.house + mark(r.house_status) + ', Senate ' + r.senate + mark(r.senate_status) + (pend(r) ? ' · * not yet called' : '');
+  };
+  const svg = mk('svg', {viewBox: '0 0 ' + M.w + ' ' + M.h, width: '100%', class: 'sct-map-svg', role: 'group', 'aria-label': 'US map of projected trifectas'});
+  const defs = mk('defs', {}), pat = mk('pattern', {id: 'sct-hatch', patternUnits: 'userSpaceOnUse', width: 6, height: 6, patternTransform: 'rotate(45)'});
+  pat.append(mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#fff', 'stroke-width': 2, 'stroke-opacity': 0.6}));
+  defs.append(pat);
+  svg.append(defs);
+  const info = document.createElement('p');
+  info.className = 'sct-map-info';
+  info.setAttribute('aria-live', 'polite');
+  info.textContent = 'Hover over or tap a state for details.';
+  const groups = [];
+  const pick = (g, r) => { groups.forEach((x) => x.classList.toggle('sct-m-on', x === g)); info.textContent = say(r); };
+  const lines = mk('g', {}), shapes = mk('g', {}), boxes = mk('g', {});
+  for (const s of M.states) {
+    const r = by[s.n];
+    if (!r) continue;
+    const k = kind(r), g = mk('g', {class: 'sct-m-g', tabindex: 0, role: 'img', 'aria-label': say(r)});
+    const lab = (x, y) => { const t = mk('text', {x, y, class: 'sct-m-lab' + (k.endsWith('new') ? ' sct-m-tn' : '')}); t.textContent = s.a; return t; };
+    g.append(mk('path', {d: s.d, class: 'sct-m-s sct-m-' + k}));
+    if (hinge(r)) g.append(mk('path', {d: s.d, class: 'sct-m-hatch', fill: 'url(#sct-hatch)'}));
+    if (s.bx != null) {
+      lines.append(mk('line', {x1: s.lx, y1: s.ly, x2: s.bx, y2: s.by + 8, class: 'sct-m-ln'}));
+      const bg = mk('g', {class: 'sct-m-g', tabindex: 0, role: 'img', 'aria-label': say(r)});
+      bg.append(mk('rect', {x: s.bx, y: s.by, width: 34, height: 17, rx: 2, class: 'sct-m-s sct-m-' + k}));
+      if (hinge(r)) bg.append(mk('rect', {x: s.bx, y: s.by, width: 34, height: 17, rx: 2, class: 'sct-m-hatch', fill: 'url(#sct-hatch)'}));
+      bg.append(lab(s.bx + 17, s.by + 8.5));
+      boxes.append(bg);
+      [g, bg].forEach((x) => { groups.push(x); ['pointerenter', 'focus', 'click'].forEach((ev) => x.addEventListener(ev, () => pick(x, r))); });
+    } else {
+      g.append(lab(s.x, s.y));
+      groups.push(g);
+      ['pointerenter', 'focus', 'click'].forEach((ev) => g.addEventListener(ev, () => pick(g, r)));
+    }
+    shapes.append(g);
+  }
+  svg.append(shapes, lines, boxes);
+  el.append(svg, info);
+});
 dash.draw('shown', (el) => {
   const rows = window.SCT.view();
   el.textContent = rows ? String(rows.length) : '\u2014';
@@ -220,6 +320,15 @@ document.querySelectorAll('.sct-tog').forEach((b) => b.addEventListener('click',
   const on = b.getAttribute('aria-pressed') !== 'true';
   b.setAttribute('aria-pressed', String(on));
   document.querySelectorAll('.sct-box').forEach((x) => x.classList.toggle(b.dataset.hide, !on));
+}));
+document.querySelectorAll('.sct-mapb').forEach((b) => b.addEventListener('click', () => {
+  const on = b.getAttribute('aria-pressed') !== 'true';
+  document.querySelectorAll('.sct-mapb').forEach((x) => x.setAttribute('aria-pressed', String(on)));
+  document.querySelectorAll('.sct-map').forEach((m) => { m.hidden = !on; });
+}));
+document.querySelectorAll('.sct-map-x').forEach((b) => b.addEventListener('click', () => {
+  document.querySelectorAll('.sct-mapb').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+  document.querySelectorAll('.sct-map').forEach((m) => { m.hidden = true; });
 }));
 document.querySelectorAll('.sct-party').forEach((b) => b.addEventListener('click', () => {
   const order = ['both', 'Rep', 'Dem'];

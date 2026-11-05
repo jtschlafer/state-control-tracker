@@ -6,11 +6,11 @@ The output is one self-contained HTML file: data, styles and scripts inline,
 no network requests, so it works from GitHub Pages or opened as a local file.
 """
 import json
+import re
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 page = (ROOT / "src/page.html").read_text()
-xl = (ROOT / "src/xl.js").read_text()
 data = json.loads((ROOT / "data/state_control_2026.json").read_text())
 
 THEME = """<style>
@@ -49,8 +49,12 @@ window.dash = (() => {
 </script>""".replace("__DATA__", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
 
 body = page.replace('<meta name="dash-one-writer">\n', "")
-body = body.replace('<script src="xl.js"></script>', "<script>\n" + xl + "</script>")
-assert "<script>\n" + xl in body, "xl.js was not inlined"
+# inline every page script from src/ (xl.js, usmap.js, ...) in place of its <script src>
+for name in re.findall(r'<script src="([A-Za-z0-9_.-]+\.js)"></script>', body):
+    js = (ROOT / "src" / name).read_text()
+    body = body.replace('<script src="' + name + '"></script>', "<script>\n" + js + "</script>")
+    assert "<script>\n" + js in body, name + " was not inlined"
+assert '<script src=' not in body, "a page script was not inlined"
 # run every drawing once, at the end of the page's own script
 last = body.rfind("</script>")
 body = body[:last] + "dash._runAll();\n" + body[last:]
