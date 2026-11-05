@@ -1,0 +1,278 @@
+<meta name="dash-one-writer">
+<style>
+.sct{font-family:var(--font-anthropic-sans);container-type:inline-size}
+.sct-title{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0 0 var(--cds-gap-xs)}
+.sct-take{font-size:var(--cds-font-size-body);margin:0 0 var(--cds-gap-xs)}
+.sct-take b,.sct-kv b{font-weight:500}
+.sct-asof{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-lg)}
+.sct-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:var(--cds-gap-md);margin-bottom:var(--cds-gap-lg)}
+.sct-kpi{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md)}
+.sct-kl{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.sct-kv{font-family:var(--font-anthropic-serif);font-size:var(--cds-font-size-title);font-variant-numeric:tabular-nums}
+.sct-ks{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.sct-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg)}
+.sct-card h2{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-xs)}
+.sct-legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-md)}
+.sct-legend span{display:inline-flex;align-items:center;gap:var(--cds-gap-xs)}
+.sct-sw{display:inline-block;padding:0 6px;border-radius:3px;font-weight:500;border:1px solid var(--color-border-line)}
+.sct-controls{display:flex;flex-wrap:wrap;gap:var(--cds-gap-sm);align-items:center;margin-bottom:var(--cds-gap-md)}
+.sct-controls input{flex:1 1 12rem;min-width:0;padding:6px 10px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:var(--color-bg);color:var(--color-fg);font:inherit}
+.sct-f{padding:5px 10px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer}
+.sct-tog{padding:5px 10px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer;margin-left:auto}
+.sct-party{padding:5px 10px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer;min-width:8.5rem}
+.sct-party.sct-p-rep{background:#a32d2d;border-color:#a32d2d;color:#fff}.sct-party.sct-p-dem{background:#1f5fa8;border-color:#1f5fa8;color:#fff}
+.sct-tog2{margin-left:0}
+.sct-xl{padding:5px 10px;border:1px solid var(--color-fg);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer}.sct-xl:disabled{opacity:.5;cursor:default}
+.sct-count{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-sm)}.sct-count b{color:var(--color-fg);font-weight:500}
+.sct-xl-msg{font-size:var(--cds-font-size-caption);color:var(--color-warn)}
+.sct-tog[aria-pressed=true]{background:var(--color-panel);border-color:var(--color-fg)}
+.sct-tog::before{content:"\2610  "}.sct-tog[aria-pressed=true]::before{content:"\2611  "}
+.sct-f[aria-pressed=true]{background:var(--color-fg);color:var(--color-bg)}
+.sct-box{max-height:72vh;overflow:auto}
+.sct-t{width:100%;border-collapse:separate;border-spacing:3px;font-size:var(--cds-font-size-body)}
+.sct-t th{position:sticky;top:0;background:var(--color-panel);z-index:1;text-align:center;font-weight:500;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);padding:0}
+.sct-t th:first-child,.sct-t th.sct-nh{text-align:left}
+.sct-sort{all:unset;cursor:pointer;display:block;padding:6px 4px}
+.sct-sort::after{content:" \2195";opacity:.4}
+th[aria-sort=ascending] .sct-sort::after{content:" \2191";opacity:1}
+th[aria-sort=descending] .sct-sort::after{content:" \2193";opacity:1}
+.sct-t td{text-align:center;padding:5px 6px;border-radius:4px;border:1px solid var(--color-border-line);font-weight:400;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sct-t td.sct-st{text-align:left}
+.sct-t td.sct-sm{text-align:left;font-weight:400}
+.sct .sct-t td.sct-b,.sct .sct-lb{font-weight:800}
+.sct-hide-sm .sct-sm,.sct-hide-sm .sct-smh{display:none}
+.sct-hide-sh .sct-sh,.sct-hide-sh .sct-shh{display:none}
+.sct-t td.sct-note{text-align:left;font-weight:400;white-space:normal;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);border:none;min-width:14rem}
+.sct-d{color:#2c6fbf}.sct-r{color:#c0392b}.sct-o{color:var(--color-fg-muted);font-weight:400!important}
+.sct-fd{background:#1f5fa8;border-color:#1f5fa8!important;color:#fff}
+.sct-fr{background:#a32d2d;border-color:#a32d2d!important;color:#fff}
+.sct-lead::after{content:"*"}.sct-nu::after{content:"\2020"}.sct-exp::after{content:"\00B0"}
+@container (max-width: 640px){.sct-note,.sct-nh{display:none}}
+</style>
+<div class="sct">
+<h1 class="sct-title">2026 state government control tracker</h1>
+<p class="sct-take">Projected after the Nov. 3 election: Democrats hold <b data-draw="cnt" data-source="tri_counts" data-field="dem" data-row="0">—</b> trifectas (before: <b data-draw="cnt" data-source="tri_counts" data-field="dem_prev" data-row="0">—</b>), Republicans hold <b data-draw="cnt" data-source="tri_counts" data-field="rep" data-row="0">—</b> (before: <b data-draw="cnt" data-source="tri_counts" data-field="rep_prev" data-row="0">—</b>).</p>
+<p class="sct-asof">Snapshot as of 8:30 a.m. ET, Nov. 4, 2026, from AP and network projections and state outlets. Uncalled races show the current leader.</p>
+<div class="sct-kpis">
+<div class="sct-kpi"><div class="sct-kl">Democratic trifectas</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="dem" data-row="0">—</b></div><div class="sct-ks">before: <span data-draw="cnt" data-source="tri_counts" data-field="dem_prev" data-row="0">—</span></div></div>
+<div class="sct-kpi"><div class="sct-kl">Republican trifectas</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="rep" data-row="0">—</b></div><div class="sct-ks">before: <span data-draw="cnt" data-source="tri_counts" data-field="rep_prev" data-row="0">—</span></div></div>
+<div class="sct-kpi"><div class="sct-kl">Divided governments</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="divided" data-row="0">—</b></div><div class="sct-ks">before: <span data-draw="cnt" data-source="tri_counts" data-field="divided_prev" data-row="0">—</span></div></div>
+<div class="sct-kpi"><div class="sct-kl">Governorships changing party</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="gov_flips" data-row="0">—</b></div><div class="sct-ks">incl. leads not yet called</div></div>
+<div class="sct-kpi"><div class="sct-kl">Chambers changing party</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="chamber_flips" data-row="0">—</b></div><div class="sct-ks">incl. leads not yet called</div></div>
+</div>
+<section class="sct-card" id="tracker">
+<h2>State-by-state control</h2>
+<div class="sct-legend">
+<span><span class="sct-sw sct-d">Dem</span><span class="sct-sw sct-r">Rep</span>unchanged</span>
+<span><span class="sct-sw sct-fd">Dem</span><span class="sct-sw sct-fr">Rep</span>changed party</span>
+<span>State name colored = trifecta; filled = new trifecta</span>
+<span><b class="sct-lb">Bold</b> House/Senate = veto-proof supermajority going forward</span>
+<span>* not called / not final &#183; &#8224; not on ballot &#183; &#176; unconfirmed, expected hold</span>
+<span>Shift = net seats gained (unofficial); &#8212; = not yet reported</span>
+<span>Supermajority = state's veto-override share (2/3 or 3/5; 2/3 where a simple majority overrides; NE 33 of 49 to end a filibuster)</span>
+</div>
+<div class="sct-controls">
+<input type="search" class="sct-q" placeholder="Search states or notes" aria-label="Search states or notes">
+<button class="sct-f" data-filter="all" aria-pressed="true">All states</button>
+<button class="sct-f" data-filter="changes" aria-pressed="false">Any change</button>
+<button class="sct-f" data-filter="tri" aria-pressed="false" title="Every state with a projected Democratic or Republican trifecta, new or continuing">All trifectas</button>
+<button class="sct-f" data-filter="new" aria-pressed="false">New trifectas</button>
+<button class="sct-f" data-filter="lost" aria-pressed="false">Trifectas lost</button>
+<button class="sct-f" data-filter="tsm" aria-pressed="false" title="Trifecta states where the legislature holds a veto-proof supermajority in both chambers">Trifecta + SuperMaj</button>
+<button class="sct-f" data-filter="uncalled" aria-pressed="false">Not yet called</button>
+<button class="sct-tog" data-hide="sct-hide-sm" aria-pressed="true">SuperMaj column</button>
+<button class="sct-tog sct-tog2" data-hide="sct-hide-sh" aria-pressed="true">Shift</button>
+<button class="sct-party" title="Cycles Both / Rep only / Dem only. Works with any view: in Trifectas lost it uses the party that lost the trifecta; in All trifectas, New trifectas and Trifecta + SuperMaj, the trifecta party; elsewhere, states where that party holds the governorship or either chamber."><span data-p="both">Party: Both</span><span data-p="Rep" hidden>Party: Rep only</span><span data-p="Dem" hidden>Party: Dem only</span></button>
+<button class="sct-xl" title="Download the rows and columns now showing (current view, party, search and sort) as an Excel workbook">Export to Excel</button>
+<span class="sct-xl-msg" hidden>Download isn't available in this view.</span>
+</div>
+<p class="sct-count">Showing <b data-draw="shown" data-source="states">—</b> of <span data-draw="total" data-source="states">—</span> states</p>
+<div class="sct-box">
+<table class="sct-t" data-source="states" data-row-key="state">
+<thead><tr>
+<th class="sct-th" data-field="state" aria-sort="ascending"><button class="sct-sort" data-key="state">State</button></th>
+<th class="sct-th" data-field="gov" aria-sort="none"><button class="sct-sort" data-key="gov">Governor</button></th>
+<th class="sct-th" data-field="house" aria-sort="none"><button class="sct-sort" data-key="house">House</button></th>
+<th class="sct-th" data-field="senate" aria-sort="none"><button class="sct-sort" data-key="senate">Senate</button></th>
+<th class="sct-th sct-shh" data-field="house_shift" aria-sort="none"><button class="sct-sort" data-key="house_shift">House Shift</button></th>
+<th class="sct-th sct-shh" data-field="senate_shift" aria-sort="none"><button class="sct-sort" data-key="senate_shift">Senate Shift</button></th>
+<th class="sct-th sct-smh" data-field="supermaj" aria-sort="none"><button class="sct-sort" data-key="supermaj">SuperMaj</button></th>
+<th class="sct-th" data-source="changes" data-field="changes" aria-sort="none"><button class="sct-sort" data-key="changes">Changes</button></th>
+<th class="sct-nh" data-field="note">Notes</th>
+</tr></thead>
+<tbody data-draw="rows"></tbody>
+</table>
+</div>
+</section>
+</div>
+<script src="xl.js"></script>
+<script>
+window.SCT = {key: 'state', dir: 1, filter: 'all', q: '', party: 'both'};
+dash.calc('tri_counts', {
+  inputs: ['states'],
+  title: 'Trifecta and flip counts',
+  description: 'Counts trifectas before and after, and offices that change party.',
+  fn: (states) => {
+    const n = (k, v) => states.filter((s) => s[k] === v).length;
+    const flips = (k) => states.filter((s) => s[k] !== s[k + '_prev']).length;
+    return [{dem: n('trifecta', 'Dem'), rep: n('trifecta', 'Rep'), divided: n('trifecta', 'Divided'),
+      dem_prev: n('trifecta_prev', 'Dem'), rep_prev: n('trifecta_prev', 'Rep'), divided_prev: n('trifecta_prev', 'Divided'),
+      gov_flips: flips('gov'), chamber_flips: flips('house') + flips('senate')}];
+  }
+});
+dash.calc('changes', {
+  inputs: ['states'],
+  title: 'Offices changing party',
+  description: 'For each state, how many of governor, house and senate change party.',
+  fn: (states) => states.map((s) => ({state: s.state, changes: ['gov', 'house', 'senate'].filter((k) => s[k] !== s[k + '_prev']).length}))
+});
+dash.draw('cnt', (el) => {
+  const d = dash.data('tri_counts');
+  const r = d.status === 'ok' && d.data && d.data[0];
+  el.textContent = r ? String(r[el.dataset.field]) : '—';
+});
+window.SCT.view = () => {
+  const d = dash.data('states'), c = dash.data('changes');
+  if (d.status !== 'ok') return null;
+  const ch = new Map((c.status === 'ok' ? c.data : []).map((r) => [r.state, Number(r.changes)]));
+  const S = window.SCT, q = S.q.trim().toLowerCase();
+  const isNew = (r) => r.trifecta !== r.trifecta_prev && r.trifecta !== 'Divided';
+  const lost = (r) => r.trifecta_prev !== 'Divided' && r.trifecta !== r.trifecta_prev;
+  const lead = (r) => [r.gov_status, r.house_status, r.senate_status].includes('leading');
+  let rows = d.data.map((r) => Object.assign({}, r, {chg: ch.get(r.state) || 0}));
+  rows = rows.filter((r) => {
+    if (S.filter === 'changes' && !(r.chg > 0 || r.trifecta !== r.trifecta_prev)) return false;
+    if (S.filter === 'tri' && !(r.trifecta === 'Dem' || r.trifecta === 'Rep')) return false;
+    if (S.filter === 'new' && !isNew(r)) return false;
+    if (S.filter === 'lost' && !lost(r)) return false;
+    if (S.filter === 'tsm' && !((r.trifecta === 'Dem' || r.trifecta === 'Rep') && r.house_sm && r.senate_sm)) return false;
+    if (S.filter === 'uncalled' && (!lead(r) || isNew(r) || lost(r))) return false;
+    if (S.party !== 'both') {
+      const p = S.party;
+      const ok = S.filter === 'lost' ? r.trifecta_prev === p : (S.filter === 'tri' || S.filter === 'new' || S.filter === 'tsm') ? r.trifecta === p : [r.gov, r.house, r.senate].includes(p);
+      if (!ok) return false;
+    }
+    if (q && !(r.state + ' ' + (r.note || '')).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const rank = {Dem: 0, Rep: 1, Divided: 2, Tied: 3, Coalition: 3, Unicameral: 4, Nonpartisan: 4};
+  rows.sort((a, b) => {
+    let v = 0;
+    if (S.key === 'state') v = a.state.localeCompare(b.state);
+    else if (S.key === 'changes') v = a.chg - b.chg;
+    else if (S.key === 'house_shift' || S.key === 'senate_shift') {
+      const an = a[S.key + '_n'], bn = b[S.key + '_n'];
+      if (an == null || bn == null) return (an == null) - (bn == null) || a.state.localeCompare(b.state);
+      v = an - bn;
+    }
+    else if (S.key === 'supermaj') {
+      const sr = (t) => { t = (t || 'None').toLowerCase(); return t.startsWith('lost') ? 0 : /doubt|likely|possible/.test(t) ? 1 : t.startsWith('added') ? 2 : t.startsWith('kept') ? 3 : 4; };
+      v = sr(a.supermaj) - sr(b.supermaj) || (a.supermaj || '').localeCompare(b.supermaj || '');
+    }
+    else {
+      v = (rank[a[S.key]] ?? 9) - (rank[b[S.key]] ?? 9);
+      if (!v) v = (b[S.key] !== b[S.key + '_prev']) - (a[S.key] !== a[S.key + '_prev']);
+    }
+    return v * S.dir || a.state.localeCompare(b.state);
+  });
+  return rows;
+};
+dash.draw('rows', (tb) => {
+  tb.replaceChildren();
+  const rows = window.SCT.view();
+  if (!rows) return;
+  const td = (txt, cls) => { const e = document.createElement('td'); e.textContent = txt; if (cls) e.className = cls; return e; };
+  const pc = (val, prev, status) => {
+    let cls = (val === 'Dem' || val === 'Rep') ? (val !== prev ? (val === 'Dem' ? 'sct-fd' : 'sct-fr') : (val === 'Dem' ? 'sct-d' : 'sct-r')) : 'sct-o';
+    if (status === 'leading') cls += ' sct-lead';
+    if (status === 'not_up') cls += ' sct-nu';
+    if (status === 'expected') cls += ' sct-exp';
+    return cls;
+  };
+  const shc = (n, st) => 'sct-sh' + (n > 0 ? ' sct-d' : n < 0 ? ' sct-r' : ' sct-o') + (st === 'prelim' ? ' sct-lead' : '');
+  for (const r of rows) {
+    const tr = document.createElement('tr');
+    let sc = 'sct-st';
+    if (r.trifecta === 'Dem' || r.trifecta === 'Rep') sc += ' ' + pc(r.trifecta, r.trifecta_prev, '');
+    tr.append(td(r.state, sc), td(r.gov, pc(r.gov, r.gov_prev, r.gov_status)), td(r.house, pc(r.house, r.house_prev, r.house_status) + (r.house_sm ? ' sct-b' : '')),
+      td(r.senate, pc(r.senate, r.senate_prev, r.senate_status) + (r.senate_sm ? ' sct-b' : '')),
+      td(r.house_shift || '\u2014', shc(r.house_shift_n, r.house_shift_status)), td(r.senate_shift || '\u2014', shc(r.senate_shift_n, r.senate_shift_status)),
+      td(r.supermaj || 'None', 'sct-sm' + ((r.supermaj || 'None') === 'None' ? ' sct-o' : '') + (r.supermaj_status === 'expected' ? ' sct-exp' : '')),
+      td(String(r.chg), r.chg ? '' : 'sct-o'), td(r.note || '', 'sct-note'));
+    tb.append(tr);
+  }
+});
+dash.draw('shown', (el) => {
+  const rows = window.SCT.view();
+  el.textContent = rows ? String(rows.length) : '\u2014';
+});
+dash.draw('total', (el) => {
+  const d = dash.data('states');
+  el.textContent = d.status === 'ok' ? String(d.data.length) : '\u2014';
+});
+document.querySelectorAll('.sct-sort').forEach((b) => b.addEventListener('click', () => {
+  const S = window.SCT, k = b.dataset.key;
+  if (S.key === k) S.dir *= -1; else { S.key = k; S.dir = k === 'changes' ? -1 : 1; }
+  document.querySelectorAll('.sct-th').forEach((th) => {
+    const own = th.querySelector('.sct-sort');
+    th.setAttribute('aria-sort', own && own.dataset.key === k ? (S.dir > 0 ? 'ascending' : 'descending') : 'none');
+  });
+  dash.draw('rows');
+  dash.draw('shown');
+}));
+document.querySelectorAll('.sct-f').forEach((b) => b.addEventListener('click', () => {
+  window.SCT.filter = b.dataset.filter;
+  document.querySelectorAll('.sct-f').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  dash.draw('rows');
+  dash.draw('shown');
+}));
+document.querySelectorAll('.sct-tog').forEach((b) => b.addEventListener('click', () => {
+  const on = b.getAttribute('aria-pressed') !== 'true';
+  b.setAttribute('aria-pressed', String(on));
+  document.querySelectorAll('.sct-box').forEach((x) => x.classList.toggle(b.dataset.hide, !on));
+}));
+document.querySelectorAll('.sct-party').forEach((b) => b.addEventListener('click', () => {
+  const order = ['both', 'Rep', 'Dem'];
+  const S = window.SCT;
+  S.party = order[(order.indexOf(S.party) + 1) % order.length];
+  b.querySelectorAll('[data-p]').forEach((x) => { x.hidden = x.dataset.p !== S.party; });
+  b.classList.toggle('sct-p-rep', S.party === 'Rep');
+  b.classList.toggle('sct-p-dem', S.party === 'Dem');
+  b.setAttribute('aria-pressed', String(S.party !== 'both'));
+  dash.draw('rows');
+  dash.draw('shown');
+}));
+const sctKey = ['Key: blue/red text = party unchanged; filled cell = changed party; state name colored = trifecta, filled = new trifecta; bold House/Senate = veto-proof supermajority going forward.', 'Markers: * not called / not final; † not on ballot; ° unconfirmed, expected hold. Shift = net seats gained (unofficial); — = not yet reported.', 'Supermajority = the state’s veto-override share (2/3 or 3/5; 2/3 where a simple majority overrides; NE 33 of 49 to end a filibuster).'];
+const sctDl = (window.claude && typeof window.claude.use === 'function') ? Promise.resolve(window.claude.use('downloads')).catch(() => null) : Promise.resolve(null);
+const sctSave = async (filename, blob) => {
+  const dl = await sctDl;
+  if (dl) return dl.save({filename, data: blob});
+  const url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+};
+document.querySelectorAll('.sct-xl').forEach((b) => b.addEventListener('click', async () => {
+  const msgs = document.querySelectorAll('.sct-xl-msg');
+  msgs.forEach((m) => { m.hidden = true; });
+  const rows = window.SCT.view();
+  if (!rows || !window.SCTXL) { msgs.forEach((m) => { m.hidden = false; }); return; }
+  b.disabled = true;
+  try {
+    const box = document.querySelector('.sct-box'), label = {};
+    document.querySelectorAll('.sct-t thead th').forEach((th) => { label[th.dataset.field] = th.textContent.trim(); });
+    const txt = (sel) => { const e = document.querySelector(sel); return e ? e.textContent.trim() : ''; };
+    const f = [...document.querySelectorAll('.sct-f')].find((x) => x.getAttribute('aria-pressed') === 'true');
+    const p = [...document.querySelectorAll('.sct-party [data-p]')].find((x) => !x.hidden);
+    const S = window.SCT, fl = f ? f.textContent.trim() : 'All states', pl = p ? p.textContent.trim() : 'Party: Both';
+    const view = 'View: ' + fl + ' · ' + pl + (S.q.trim() ? ' · Search: “' + S.q.trim() + '”' : '') + ' · ' + rows.length + (rows.length === 1 ? ' state' : ' states');
+    const blob = window.SCTXL.build(rows, {hideSm: !!box && box.classList.contains('sct-hide-sm'), hideSh: !!box && box.classList.contains('sct-hide-sh'), label, title: txt('.sct-title'), asof: txt('.sct-asof'), view, key: sctKey});
+    const slug = (fl + (S.party !== 'both' ? ' ' + S.party : '')).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    await sctSave('state-control-2026-' + slug + '.xlsx', blob);
+  } catch (e) {
+    if (!e || e.code !== 'declined') msgs.forEach((m) => { m.hidden = false; });
+  } finally {
+    b.disabled = false;
+  }
+}));
+document.querySelectorAll('.sct-q').forEach((i) => i.addEventListener('input', () => { window.SCT.q = i.value; dash.draw('rows'); dash.draw('shown'); }));
+</script>

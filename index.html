@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026 state government control tracker</title>
+<style>
+:root{--font-anthropic-sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--font-anthropic-serif:Georgia,"Times New Roman",serif;
+--cds-font-size-title:1.6rem;--cds-font-size-heading:1.1rem;--cds-font-size-body:.95rem;--cds-font-size-caption:.8rem;--cds-font-weight-medium:500;
+--cds-gap-xs:4px;--cds-gap-sm:8px;--cds-gap-md:12px;--cds-gap-lg:20px;--cds-radius:8px;--cds-pad-md:12px;--cds-pad-lg:18px;
+--color-fg:#1f1f1f;--color-fg-muted:#6b6b6b;--color-bg:#f7f7f5;--color-panel:#ffffff;--color-border-line:#e3e3df;--color-warn:#a15c00;color-scheme:light}
+@media (prefers-color-scheme: dark){:root{--color-fg:#ececec;--color-fg-muted:#a3a3a3;--color-bg:#191919;--color-panel:#232323;--color-border-line:#3a3a3a;--color-warn:#e0a040;color-scheme:dark}}
+html,body{margin:0;background:var(--color-bg);color:var(--color-fg)}
+.sct-page{max-width:1400px;margin:0 auto;padding:24px 20px 40px}
+.sct-foot{font-family:var(--font-anthropic-sans);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-top:var(--cds-gap-lg)}
+</style>
+<script>
+window.dash = (() => {
+  const DATA = {states: [{"state": "Alabama", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Alaska", "gov": "Dem", "gov_prev": "Rep", "gov_status": "leading", "house": "Coalition", "house_prev": "Coalition", "house_status": "", "senate": "Coalition", "senate_prev": "Coalition", "senate_status": "", "trifecta": "Divided", "trifecta_prev": "Divided", "note": "Kreiss-Tomkins (D) leads; ranked-choice tabulation Nov. 18. Both chambers run by bipartisan coalitions.", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Arizona", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Rep", "house_status": "leading", "senate": "Dem", "senate_prev": "Rep", "senate_status": "leading", "trifecta": "Dem", "trifecta_prev": "Divided", "note": "Hobbs reelected; Dems positioned for 38 of 60 House and 21 of 30 Senate seats (from 27 and 13) with Maricopa ballots still being counted.", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +11", "house_shift_n": 11, "house_shift_status": "prelim", "senate_shift": "Dem +8", "senate_shift_n": 8, "senate_shift_status": "prelim"}, {"state": "Arkansas", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "California", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Colorado", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "Dems win two-thirds supermajorities in both chambers (needed one seat in each; ~49 of 65 House seats).", "supermaj": "Added both", "supermaj_status": "", "house_sm": true, "senate_sm": true, "house_shift": "Dem +6", "house_shift_n": 6, "house_shift_status": "prelim", "senate_shift": "Dem +1", "senate_shift_n": 1, "senate_shift_status": ""}, {"state": "Connecticut", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "", "supermaj": "Kept both", "supermaj_status": "", "house_sm": true, "senate_sm": true, "house_shift": "Dem +9", "house_shift_n": 9, "house_shift_status": "prelim", "senate_shift": "Dem +5", "senate_shift_n": 5, "senate_shift_status": "prelim"}, {"state": "Delaware", "gov": "Dem", "gov_prev": "Dem", "gov_status": "not_up", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "", "supermaj": "Kept both", "supermaj_status": "", "house_sm": true, "senate_sm": true, "house_shift": "Dem +3", "house_shift_n": 3, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Florida", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "Donalds (R) elected; GOP loses House supermajority (Dems win 49 seats, +15). Senate supermajority in doubt: Dem Lowndes leads Sen. Brodeur (Ballotpedia counts it lost).", "supermaj": "Lost House; Senate in doubt", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +15", "house_shift_n": 15, "house_shift_status": "prelim", "senate_shift": "Dem +1", "senate_shift_n": 1, "senate_shift_status": "prelim"}, {"state": "Georgia", "gov": "Dem", "gov_prev": "Rep", "gov_status": "", "house": "Dem", "house_prev": "Rep", "house_status": "leading", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Divided", "trifecta_prev": "Rep", "note": "Dems sweep every statewide office and PSC; unofficial results show Dems at 93 House seats (91 needed), some in recount range.", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +12", "house_shift_n": 12, "house_shift_status": "prelim", "senate_shift": "Dem +4", "senate_shift_n": 4, "senate_shift_status": ""}, {"state": "Hawaii", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Idaho", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Illinois", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Indiana", "gov": "Rep", "gov_prev": "Rep", "gov_status": "not_up", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "GOP House supermajority broken; Speaker Huston trailing.", "supermaj": "Lost House; kept Senate", "supermaj_status": "", "house_sm": false, "senate_sm": true, "house_shift": "Dem +4", "house_shift_n": 4, "house_shift_status": "prelim", "senate_shift": "Dem +4", "senate_shift_n": 4, "senate_shift_status": "prelim"}, {"state": "Iowa", "gov": "Dem", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Divided", "trifecta_prev": "Rep", "note": "Sand (D) flips governor; GOP keeps legislature, loses House supermajority.", "supermaj": "Lost House", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +10", "house_shift_n": 10, "house_shift_status": "", "senate_shift": "No change", "senate_shift_n": 0, "senate_shift_status": ""}, {"state": "Kansas", "gov": "Dem", "gov_prev": "Dem", "gov_status": "leading", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "not_up", "trifecta": "Divided", "trifecta_prev": "Divided", "note": "Holscher (D) leads 50.3%-49.7% with ~24,000 votes left (too early to call); Dems break GOP House supermajority (57 D-68 R per SoS site); Senate supermajority (not up) remains.", "supermaj": "Lost House; kept Senate", "supermaj_status": "", "house_sm": false, "senate_sm": true, "house_shift": "Dem +20", "house_shift_n": 20, "house_shift_status": "", "senate_shift": "Not up", "senate_shift_n": null, "senate_shift_status": "not_up"}, {"state": "Kentucky", "gov": "Dem", "gov_prev": "Dem", "gov_status": "not_up", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Divided", "trifecta_prev": "Divided", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Louisiana", "gov": "Rep", "gov_prev": "Rep", "gov_status": "not_up", "house": "Rep", "house_prev": "Rep", "house_status": "not_up", "senate": "Rep", "senate_prev": "Rep", "senate_status": "not_up", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "No legislative elections in 2026.", "supermaj": "Kept both", "supermaj_status": "", "house_sm": true, "senate_sm": true, "house_shift": "Not up", "house_shift_n": null, "house_shift_status": "not_up", "senate_shift": "Not up", "senate_shift_n": null, "senate_shift_status": "not_up"}, {"state": "Maine", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "Pingree (D) holds governor; Dems claim at least 87 House and 22 Senate seats.", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +12", "house_shift_n": 12, "house_shift_status": "prelim", "senate_shift": "Dem +2", "senate_shift_n": 2, "senate_shift_status": ""}, {"state": "Maryland", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Massachusetts", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Michigan", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Rep", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Divided", "note": "Benson (D) elected; Dems retake House (51 seats called) and keep Senate (19 called, 20 needed).", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +4", "house_shift_n": 4, "house_shift_status": "prelim", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Minnesota", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Tied", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Divided", "note": "Klobuchar (D) elected; DFL wins House (was 67-67 tie) and holds Senate; recounts likely.", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +8", "house_shift_n": 8, "house_shift_status": "prelim", "senate_shift": "Dem +5", "senate_shift_n": 5, "senate_shift_status": "prelim"}, {"state": "Mississippi", "gov": "Rep", "gov_prev": "Rep", "gov_status": "not_up", "house": "Rep", "house_prev": "Rep", "house_status": "not_up", "senate": "Rep", "senate_prev": "Rep", "senate_status": "not_up", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "No legislative elections in 2026.", "supermaj": "Kept House", "supermaj_status": "", "house_sm": true, "senate_sm": false, "house_shift": "Not up", "house_shift_n": null, "house_shift_status": "not_up", "senate_shift": "Not up", "senate_shift_n": null, "senate_shift_status": "not_up"}, {"state": "Missouri", "gov": "Rep", "gov_prev": "Rep", "gov_status": "not_up", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "GOP loses supermajorities in both chambers: House now ~95-68; in the Senate, Dems won the 2 seats needed to break it.", "supermaj": "Lost both", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +16", "house_shift_n": 16, "house_shift_status": "", "senate_shift": "Dem +2", "senate_shift_n": 2, "senate_shift_status": ""}, {"state": "Montana", "gov": "Rep", "gov_prev": "Rep", "gov_status": "not_up", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Nebraska", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Unicameral", "house_prev": "Unicameral", "house_status": "", "senate": "Nonpartisan", "senate_prev": "Nonpartisan", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "Officially nonpartisan unicameral; counted as a GOP trifecta under Ballotpedia's convention. GOP appears likely to lose its 33-seat filibuster-proof bloc (not final).", "supermaj": "Likely lost", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Nevada", "gov": "Dem", "gov_prev": "Rep", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Divided", "note": "Ford (D) unseats Lombardo; Dems gain a two-thirds Assembly supermajority; Senate one seat short with two races in play.", "supermaj": "Added House", "supermaj_status": "", "house_sm": true, "senate_sm": false, "house_shift": "Dem +1", "house_shift_n": 1, "house_shift_status": "prelim", "senate_shift": "No change", "senate_shift_n": 0, "senate_shift_status": "prelim"}, {"state": "New Hampshire", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Dem", "house_prev": "Rep", "house_status": "", "senate": "Dem", "senate_prev": "Rep", "senate_status": "", "trifecta": "Divided", "trifecta_prev": "Rep", "note": "Ayotte (R) reelected; Dems win House, Senate and all 5 Executive Council seats.", "supermaj": "Lost Senate", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +22", "house_shift_n": 22, "house_shift_status": "prelim", "senate_shift": "Dem +7", "senate_shift_n": 7, "senate_shift_status": "prelim"}, {"state": "New Jersey", "gov": "Dem", "gov_prev": "Dem", "gov_status": "not_up", "house": "Dem", "house_prev": "Dem", "house_status": "not_up", "senate": "Dem", "senate_prev": "Dem", "senate_status": "not_up", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "No legislative elections in 2026.", "supermaj": "Kept House", "supermaj_status": "", "house_sm": true, "senate_sm": false, "house_shift": "Not up", "house_shift_n": null, "house_shift_status": "not_up", "senate_shift": "Not up", "senate_shift_n": null, "senate_shift_status": "not_up"}, {"state": "New Mexico", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "not_up", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "Haaland (D) elected.", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "Not up", "senate_shift_n": null, "senate_shift_status": "not_up"}, {"state": "New York", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "Dems regain Senate supermajority (needed 1 seat, flipped at least 2); Assembly supermajority expected to hold.", "supermaj": "Added Senate; kept House", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "Dem +2", "senate_shift_n": 2, "senate_shift_status": "prelim"}, {"state": "North Carolina", "gov": "Dem", "gov_prev": "Dem", "gov_status": "not_up", "house": "Dem", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Divided", "trifecta_prev": "Divided", "note": "Dems win House for first time since 2010; GOP keeps narrow Senate majority, loses supermajority.", "supermaj": "Lost Senate", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +21", "house_shift_n": 21, "house_shift_status": "", "senate_shift": "Dem +4", "senate_shift_n": 4, "senate_shift_status": ""}, {"state": "North Dakota", "gov": "Rep", "gov_prev": "Rep", "gov_status": "not_up", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Ohio", "gov": "Dem", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Divided", "trifecta_prev": "Rep", "note": "Acton (D) flips governor; Dems win SoS; GOP House supermajority broken. Senate supermajority uncertain (Dems needed 3 seats, flipped at least 1).", "supermaj": "Lost House; Senate in doubt", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +10", "house_shift_n": 10, "house_shift_status": "prelim", "senate_shift": "Dem +1", "senate_shift_n": 1, "senate_shift_status": "prelim"}, {"state": "Oklahoma", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "", "supermaj": "Kept both", "supermaj_status": "", "house_sm": true, "senate_sm": true, "house_shift": "Dem +5", "house_shift_n": 5, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Oregon", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "Dems on track for 39 of 60 House and 19 of 30 Senate seats: more than 3/5 for taxes, short of the 2/3 veto-override line (40/20).", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +2", "house_shift_n": 2, "house_shift_status": "prelim", "senate_shift": "Dem +1", "senate_shift_n": 1, "senate_shift_status": "prelim"}, {"state": "Pennsylvania", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Rep", "senate_status": "leading", "trifecta": "Dem", "trifecta_prev": "Divided", "note": "Shapiro reelected; Dems claim Senate flip, but AP has not called it (24-24 with 2 seats outstanding Wed. a.m.).", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +6", "house_shift_n": 6, "house_shift_status": "", "senate_shift": "Dem +3", "senate_shift_n": 3, "senate_shift_status": "prelim"}, {"state": "Rhode Island", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "Foulkes (D) elected governor (AP).", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "South Carolina", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "not_up", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "Wilson (R) elected; GOP loses House supermajority (Dems gain at least 10 seats); Senate not up, supermajority remains.", "supermaj": "Lost House; kept Senate", "supermaj_status": "", "house_sm": false, "senate_sm": true, "house_shift": "Dem +10", "house_shift_n": 10, "house_shift_status": "prelim", "senate_shift": "Not up", "senate_shift_n": null, "senate_shift_status": "not_up"}, {"state": "South Dakota", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Tennessee", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "Blackburn (R) elected.", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Texas", "gov": "Dem", "gov_prev": "Rep", "gov_status": "", "house": "Dem", "house_prev": "Rep", "house_status": "leading", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Divided", "trifecta_prev": "Rep", "note": "Hinojosa (D) unseats Abbott; Dems also win Lt. Gov. and AG; AP had called 6 House flips by 6 a.m. Wed. and Dems lead in at least 12 more (14 needed).", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +18", "house_shift_n": 18, "house_shift_status": "prelim", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Utah", "gov": "Rep", "gov_prev": "Rep", "gov_status": "not_up", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "GOP House supermajority in doubt: Dems lead ~15 GOP-held seats (50 of 75 needed). Senate supermajority expected to hold.", "supermaj": "House in doubt; kept Senate", "supermaj_status": "expected", "house_sm": false, "senate_sm": true, "house_shift": "Dem +12", "house_shift_n": 12, "house_shift_status": "prelim", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Vermont", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Divided", "trifecta_prev": "Divided", "note": "Scott (R) wins record 6th term; Dems restore veto-proof supermajorities in both chambers (Vermont Public), seat counts not yet final.", "supermaj": "Added both", "supermaj_status": "", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Virginia", "gov": "Dem", "gov_prev": "Dem", "gov_status": "not_up", "house": "Dem", "house_prev": "Dem", "house_status": "not_up", "senate": "Dem", "senate_prev": "Dem", "senate_status": "not_up", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "No legislative elections in 2026.", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Not up", "house_shift_n": null, "house_shift_status": "not_up", "senate_shift": "Not up", "senate_shift_n": null, "senate_shift_status": "not_up"}, {"state": "Washington", "gov": "Dem", "gov_prev": "Dem", "gov_status": "not_up", "house": "Dem", "house_prev": "Dem", "house_status": "", "senate": "Dem", "senate_prev": "Dem", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Dem", "note": "Initial tallies show Dems flipping 9 GOP House seats (7 needed for 66-seat two-thirds); more ballots to count.", "supermaj": "Possible add House", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +9", "house_shift_n": 9, "house_shift_status": "prelim", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "West Virginia", "gov": "Rep", "gov_prev": "Rep", "gov_status": "not_up", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}, {"state": "Wisconsin", "gov": "Dem", "gov_prev": "Dem", "gov_status": "", "house": "Dem", "house_prev": "Rep", "house_status": "", "senate": "Dem", "senate_prev": "Rep", "senate_status": "", "trifecta": "Dem", "trifecta_prev": "Divided", "note": "Crowley (D) elected; Dems win Senate 18-15 and Assembly 53-46.", "supermaj": "None", "supermaj_status": "", "house_sm": false, "senate_sm": false, "house_shift": "Dem +8", "house_shift_n": 8, "house_shift_status": "", "senate_shift": "Dem +3", "senate_shift_n": 3, "senate_shift_status": ""}, {"state": "Wyoming", "gov": "Rep", "gov_prev": "Rep", "gov_status": "", "house": "Rep", "house_prev": "Rep", "house_status": "", "senate": "Rep", "senate_prev": "Rep", "senate_status": "", "trifecta": "Rep", "trifecta_prev": "Rep", "note": "Barlow (R) elected governor.", "supermaj": "Kept both", "supermaj_status": "expected", "house_sm": true, "senate_sm": true, "house_shift": "—", "house_shift_n": null, "house_shift_status": "", "senate_shift": "—", "senate_shift_n": null, "senate_shift_status": ""}]};
+  const calcs = {}, draws = {}, cache = {};
+  const data = (id) => {
+    if (DATA[id]) return {status: 'ok', data: DATA[id], columns: Object.keys(DATA[id][0] || {}), meta: []};
+    const c = calcs[id];
+    if (c) {
+      if (!(id in cache)) cache[id] = c.fn(...c.inputs.map((i) => data(i).data));
+      return {status: 'ok', data: cache[id], meta: []};
+    }
+    return {status: 'missing', data: [], meta: []};
+  };
+  const run = (name) => document.querySelectorAll('[data-draw="' + name + '"]').forEach((el) => draws[name](el));
+  return {
+    data,
+    calc: (id, o) => { calcs[id] = o; },
+    draw: (name, fn) => { if (typeof fn === 'function') draws[name] = fn; else if (draws[name]) run(name); },
+    onData: (fn) => fn(),
+    _runAll: () => Object.keys(draws).forEach(run),
+  };
+})();
+</script>
+</head>
+<body>
+<div class="sct-page">
+<style>
+.sct{font-family:var(--font-anthropic-sans);container-type:inline-size}
+.sct-title{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0 0 var(--cds-gap-xs)}
+.sct-take{font-size:var(--cds-font-size-body);margin:0 0 var(--cds-gap-xs)}
+.sct-take b,.sct-kv b{font-weight:500}
+.sct-asof{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-lg)}
+.sct-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:var(--cds-gap-md);margin-bottom:var(--cds-gap-lg)}
+.sct-kpi{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md)}
+.sct-kl{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.sct-kv{font-family:var(--font-anthropic-serif);font-size:var(--cds-font-size-title);font-variant-numeric:tabular-nums}
+.sct-ks{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.sct-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg)}
+.sct-card h2{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-xs)}
+.sct-legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-md)}
+.sct-legend span{display:inline-flex;align-items:center;gap:var(--cds-gap-xs)}
+.sct-sw{display:inline-block;padding:0 6px;border-radius:3px;font-weight:500;border:1px solid var(--color-border-line)}
+.sct-controls{display:flex;flex-wrap:wrap;gap:var(--cds-gap-sm);align-items:center;margin-bottom:var(--cds-gap-md)}
+.sct-controls input{flex:1 1 12rem;min-width:0;padding:6px 10px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:var(--color-bg);color:var(--color-fg);font:inherit}
+.sct-f{padding:5px 10px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer}
+.sct-tog{padding:5px 10px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer;margin-left:auto}
+.sct-party{padding:5px 10px;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer;min-width:8.5rem}
+.sct-party.sct-p-rep{background:#a32d2d;border-color:#a32d2d;color:#fff}.sct-party.sct-p-dem{background:#1f5fa8;border-color:#1f5fa8;color:#fff}
+.sct-tog2{margin-left:0}
+.sct-xl{padding:5px 10px;border:1px solid var(--color-fg);border-radius:var(--cds-radius);background:transparent;color:var(--color-fg);font:inherit;font-size:var(--cds-font-size-caption);cursor:pointer}.sct-xl:disabled{opacity:.5;cursor:default}
+.sct-count{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-sm)}.sct-count b{color:var(--color-fg);font-weight:500}
+.sct-xl-msg{font-size:var(--cds-font-size-caption);color:var(--color-warn)}
+.sct-tog[aria-pressed=true]{background:var(--color-panel);border-color:var(--color-fg)}
+.sct-tog::before{content:"\2610  "}.sct-tog[aria-pressed=true]::before{content:"\2611  "}
+.sct-f[aria-pressed=true]{background:var(--color-fg);color:var(--color-bg)}
+.sct-box{max-height:72vh;overflow:auto}
+.sct-t{width:100%;border-collapse:separate;border-spacing:3px;font-size:var(--cds-font-size-body)}
+.sct-t th{position:sticky;top:0;background:var(--color-panel);z-index:1;text-align:center;font-weight:500;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);padding:0}
+.sct-t th:first-child,.sct-t th.sct-nh{text-align:left}
+.sct-sort{all:unset;cursor:pointer;display:block;padding:6px 4px}
+.sct-sort::after{content:" \2195";opacity:.4}
+th[aria-sort=ascending] .sct-sort::after{content:" \2191";opacity:1}
+th[aria-sort=descending] .sct-sort::after{content:" \2193";opacity:1}
+.sct-t td{text-align:center;padding:5px 6px;border-radius:4px;border:1px solid var(--color-border-line);font-weight:400;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sct-t td.sct-st{text-align:left}
+.sct-t td.sct-sm{text-align:left;font-weight:400}
+.sct .sct-t td.sct-b,.sct .sct-lb{font-weight:800}
+.sct-hide-sm .sct-sm,.sct-hide-sm .sct-smh{display:none}
+.sct-hide-sh .sct-sh,.sct-hide-sh .sct-shh{display:none}
+.sct-t td.sct-note{text-align:left;font-weight:400;white-space:normal;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);border:none;min-width:14rem}
+.sct-d{color:#2c6fbf}.sct-r{color:#c0392b}.sct-o{color:var(--color-fg-muted);font-weight:400!important}
+.sct-fd{background:#1f5fa8;border-color:#1f5fa8!important;color:#fff}
+.sct-fr{background:#a32d2d;border-color:#a32d2d!important;color:#fff}
+.sct-lead::after{content:"*"}.sct-nu::after{content:"\2020"}.sct-exp::after{content:"\00B0"}
+@container (max-width: 640px){.sct-note,.sct-nh{display:none}}
+</style>
+<div class="sct">
+<h1 class="sct-title">2026 state government control tracker</h1>
+<p class="sct-take">Projected after the Nov. 3 election: Democrats hold <b data-draw="cnt" data-source="tri_counts" data-field="dem" data-row="0">—</b> trifectas (before: <b data-draw="cnt" data-source="tri_counts" data-field="dem_prev" data-row="0">—</b>), Republicans hold <b data-draw="cnt" data-source="tri_counts" data-field="rep" data-row="0">—</b> (before: <b data-draw="cnt" data-source="tri_counts" data-field="rep_prev" data-row="0">—</b>).</p>
+<p class="sct-asof">Snapshot as of 8:30 a.m. ET, Nov. 4, 2026, from AP and network projections and state outlets. Uncalled races show the current leader.</p>
+<div class="sct-kpis">
+<div class="sct-kpi"><div class="sct-kl">Democratic trifectas</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="dem" data-row="0">—</b></div><div class="sct-ks">before: <span data-draw="cnt" data-source="tri_counts" data-field="dem_prev" data-row="0">—</span></div></div>
+<div class="sct-kpi"><div class="sct-kl">Republican trifectas</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="rep" data-row="0">—</b></div><div class="sct-ks">before: <span data-draw="cnt" data-source="tri_counts" data-field="rep_prev" data-row="0">—</span></div></div>
+<div class="sct-kpi"><div class="sct-kl">Divided governments</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="divided" data-row="0">—</b></div><div class="sct-ks">before: <span data-draw="cnt" data-source="tri_counts" data-field="divided_prev" data-row="0">—</span></div></div>
+<div class="sct-kpi"><div class="sct-kl">Governorships changing party</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="gov_flips" data-row="0">—</b></div><div class="sct-ks">incl. leads not yet called</div></div>
+<div class="sct-kpi"><div class="sct-kl">Chambers changing party</div><div class="sct-kv"><b data-draw="cnt" data-source="tri_counts" data-field="chamber_flips" data-row="0">—</b></div><div class="sct-ks">incl. leads not yet called</div></div>
+</div>
+<section class="sct-card" id="tracker">
+<h2>State-by-state control</h2>
+<div class="sct-legend">
+<span><span class="sct-sw sct-d">Dem</span><span class="sct-sw sct-r">Rep</span>unchanged</span>
+<span><span class="sct-sw sct-fd">Dem</span><span class="sct-sw sct-fr">Rep</span>changed party</span>
+<span>State name colored = trifecta; filled = new trifecta</span>
+<span><b class="sct-lb">Bold</b> House/Senate = veto-proof supermajority going forward</span>
+<span>* not called / not final &#183; &#8224; not on ballot &#183; &#176; unconfirmed, expected hold</span>
+<span>Shift = net seats gained (unofficial); &#8212; = not yet reported</span>
+<span>Supermajority = state's veto-override share (2/3 or 3/5; 2/3 where a simple majority overrides; NE 33 of 49 to end a filibuster)</span>
+</div>
+<div class="sct-controls">
+<input type="search" class="sct-q" placeholder="Search states or notes" aria-label="Search states or notes">
+<button class="sct-f" data-filter="all" aria-pressed="true">All states</button>
+<button class="sct-f" data-filter="changes" aria-pressed="false">Any change</button>
+<button class="sct-f" data-filter="tri" aria-pressed="false" title="Every state with a projected Democratic or Republican trifecta, new or continuing">All trifectas</button>
+<button class="sct-f" data-filter="new" aria-pressed="false">New trifectas</button>
+<button class="sct-f" data-filter="lost" aria-pressed="false">Trifectas lost</button>
+<button class="sct-f" data-filter="tsm" aria-pressed="false" title="Trifecta states where the legislature holds a veto-proof supermajority in both chambers">Trifecta + SuperMaj</button>
+<button class="sct-f" data-filter="uncalled" aria-pressed="false">Not yet called</button>
+<button class="sct-tog" data-hide="sct-hide-sm" aria-pressed="true">SuperMaj column</button>
+<button class="sct-tog sct-tog2" data-hide="sct-hide-sh" aria-pressed="true">Shift</button>
+<button class="sct-party" title="Cycles Both / Rep only / Dem only. Works with any view: in Trifectas lost it uses the party that lost the trifecta; in All trifectas, New trifectas and Trifecta + SuperMaj, the trifecta party; elsewhere, states where that party holds the governorship or either chamber."><span data-p="both">Party: Both</span><span data-p="Rep" hidden>Party: Rep only</span><span data-p="Dem" hidden>Party: Dem only</span></button>
+<button class="sct-xl" title="Download the rows and columns now showing (current view, party, search and sort) as an Excel workbook">Export to Excel</button>
+<span class="sct-xl-msg" hidden>Download isn't available in this view.</span>
+</div>
+<p class="sct-count">Showing <b data-draw="shown" data-source="states">—</b> of <span data-draw="total" data-source="states">—</span> states</p>
+<div class="sct-box">
+<table class="sct-t" data-source="states" data-row-key="state">
+<thead><tr>
+<th class="sct-th" data-field="state" aria-sort="ascending"><button class="sct-sort" data-key="state">State</button></th>
+<th class="sct-th" data-field="gov" aria-sort="none"><button class="sct-sort" data-key="gov">Governor</button></th>
+<th class="sct-th" data-field="house" aria-sort="none"><button class="sct-sort" data-key="house">House</button></th>
+<th class="sct-th" data-field="senate" aria-sort="none"><button class="sct-sort" data-key="senate">Senate</button></th>
+<th class="sct-th sct-shh" data-field="house_shift" aria-sort="none"><button class="sct-sort" data-key="house_shift">House Shift</button></th>
+<th class="sct-th sct-shh" data-field="senate_shift" aria-sort="none"><button class="sct-sort" data-key="senate_shift">Senate Shift</button></th>
+<th class="sct-th sct-smh" data-field="supermaj" aria-sort="none"><button class="sct-sort" data-key="supermaj">SuperMaj</button></th>
+<th class="sct-th" data-source="changes" data-field="changes" aria-sort="none"><button class="sct-sort" data-key="changes">Changes</button></th>
+<th class="sct-nh" data-field="note">Notes</th>
+</tr></thead>
+<tbody data-draw="rows"></tbody>
+</table>
+</div>
+</section>
+<p class="sct-foot">Unofficial results compiled from AP and network projections and state news outlets; every figure can change until certification. Shared as a snapshot: the time at the top says how current it is.</p>
+</div>
+<script>
+window.SCTXL = (() => {
+  const XL = {};
+  XL.esc = (s) => String(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const T = new Uint32Array(256);
+  for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; T[n] = c >>> 0; }
+  const crc = (b) => { let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = T[(c ^ b[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+  XL.zip = (files) => {
+    const enc = new TextEncoder(), parts = [], cent = [];
+    let off = 0;
+    for (const [name, text] of files) {
+      const nb = enc.encode(name), db = enc.encode(text), k = crc(db);
+      const h = new DataView(new ArrayBuffer(30));
+      h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true);
+      h.setUint16(12, 0x21, true); h.setUint32(14, k, true); h.setUint32(18, db.length, true); h.setUint32(22, db.length, true);
+      h.setUint16(26, nb.length, true);
+      parts.push(new Uint8Array(h.buffer), nb, db);
+      const c = new DataView(new ArrayBuffer(46));
+      c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true);
+      c.setUint16(14, 0x21, true); c.setUint32(16, k, true); c.setUint32(20, db.length, true); c.setUint32(24, db.length, true);
+      c.setUint16(28, nb.length, true); c.setUint32(42, off, true);
+      cent.push(new Uint8Array(c.buffer), nb);
+      off += 30 + nb.length + db.length;
+    }
+    const size = cent.reduce((a, p) => a + p.length, 0);
+    const e = new DataView(new ArrayBuffer(22));
+    e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true);
+    e.setUint32(12, size, true); e.setUint32(16, off, true);
+    return new Blob([...parts, ...cent, new Uint8Array(e.buffer)]);
+  };
+  const FONTS = ['', '<b/>', '<color rgb="FF2C6FBF"/>', '<color rgb="FFC0392B"/>', '<color rgb="FFFFFFFF"/>', '<b/><color rgb="FF2C6FBF"/>', '<b/><color rgb="FFC0392B"/>', '<b/><color rgb="FFFFFFFF"/>', '<b/><sz val="14"/>', '<color rgb="FF6B6B6B"/>']
+    .map((f) => '<font>' + f + (f.includes('<sz') ? '' : '<sz val="11"/>') + '<name val="Calibri"/></font>').join('');
+  const solid = (rgb) => '<fill><patternFill patternType="solid"><fgColor rgb="' + rgb + '"/><bgColor indexed="64"/></patternFill></fill>';
+  const FILLS = '<fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill>' + solid('FF1F5FA8') + solid('FFA32D2D') + solid('FFEDEDED');
+  const NS = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+  const HEAD = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  XL.build = (rows, o) => {
+    const xfs = [[0, 0, 0]], xmap = {'0-0-0': 0};
+    const st = (f, fl = 0, w = 0) => { const k = f + '-' + fl + '-' + w; if (!(k in xmap)) { xmap[k] = xfs.length; xfs.push([f, fl, w]); } return xmap[k]; };
+    const mark = (s) => s === 'leading' ? '*' : s === 'not_up' ? '†' : s === 'expected' ? '°' : '';
+    const party = (val, prev, status, bold) => {
+      const v = val || '';
+      if (v !== 'Dem' && v !== 'Rep') return {v: v + mark(status), s: st(9)};
+      const ch = v !== prev;
+      const f = ch ? (bold ? 7 : 4) : (v === 'Dem' ? (bold ? 5 : 2) : (bold ? 6 : 3));
+      return {v: v + mark(status), s: st(f, ch ? (v === 'Dem' ? 2 : 3) : 0)};
+    };
+    const shift = (t, n, s) => ({v: (t || '—') + (s === 'prelim' ? '*' : ''), s: st(n > 0 ? 2 : n < 0 ? 3 : 9)});
+    const cols = [
+      {f: 'state', w: 16, cell: (r) => {
+        const t = r.trifecta;
+        if (t !== 'Dem' && t !== 'Rep') return {v: r.state, s: st(0)};
+        const nw = t !== r.trifecta_prev;
+        return {v: r.state, s: st(nw ? 4 : (t === 'Dem' ? 2 : 3), nw ? (t === 'Dem' ? 2 : 3) : 0)};
+      }},
+      {f: 'gov', w: 11, cell: (r) => party(r.gov, r.gov_prev, r.gov_status, false)},
+      {f: 'house', w: 12, cell: (r) => party(r.house, r.house_prev, r.house_status, r.house_sm)},
+      {f: 'senate', w: 12, cell: (r) => party(r.senate, r.senate_prev, r.senate_status, r.senate_sm)},
+      {f: 'house_shift', w: 13, sh: 1, cell: (r) => shift(r.house_shift, r.house_shift_n, r.house_shift_status)},
+      {f: 'senate_shift', w: 13, sh: 1, cell: (r) => shift(r.senate_shift, r.senate_shift_n, r.senate_shift_status)},
+      {f: 'supermaj', w: 30, sm: 1, cell: (r) => { const t = r.supermaj || 'None'; return {v: t + (r.supermaj_status === 'expected' ? '°' : ''), s: st(t === 'None' ? 9 : 0)}; }},
+      {f: 'changes', w: 10, cell: (r) => ({v: Number(r.chg) || 0, num: 1, s: st(r.chg ? 0 : 9)})},
+      {f: 'note', w: 90, cell: (r) => ({v: r.note || '', s: st(0, 0, 1)})},
+    ].filter((c) => !(c.sh && o.hideSh) && !(c.sm && o.hideSm));
+    const H = 5;
+    const grid = [[{v: o.title, s: st(8)}], [{v: o.asof, s: st(9)}], [{v: o.view, s: st(0)}], [],
+      cols.map((c) => ({v: o.label[c.f] || c.f, s: st(1, 4)}))];
+    rows.forEach((r) => grid.push(cols.map((c) => c.cell(r))));
+    grid.push([]);
+    (o.key || []).forEach((k) => grid.push([{v: k, s: st(9)}]));
+    const L = (i) => String.fromCharCode(65 + i), last = L(cols.length - 1), end = H + rows.length;
+    let sh = HEAD + '<worksheet xmlns="' + NS + '"><sheetViews><sheetView workbookViewId="0"><pane ySplit="' + H + '" topLeftCell="A' + (H + 1) + '" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols>' +
+      cols.map((c, i) => '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + c.w + '" customWidth="1"/>').join('') + '</cols><sheetData>';
+    grid.forEach((row, ri) => {
+      sh += '<row r="' + (ri + 1) + '">';
+      row.forEach((c, ci) => {
+        if (!c) return;
+        const ref = L(ci) + (ri + 1), s = c.s ? ' s="' + c.s + '"' : '';
+        sh += c.num ? '<c r="' + ref + '"' + s + '><v>' + c.v + '</v></c>' : '<c r="' + ref + '"' + s + ' t="inlineStr"><is><t xml:space="preserve">' + XL.esc(c.v) + '</t></is></c>';
+      });
+      sh += '</row>';
+    });
+    sh += '</sheetData><autoFilter ref="A' + H + ':' + last + end + '"/></worksheet>';
+    const styles = HEAD + '<styleSheet xmlns="' + NS + '"><fonts count="10">' + FONTS + '</fonts><fills count="5">' + FILLS +
+      '</fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="' + xfs.length + '">' +
+      xfs.map(([f, fl, w]) => '<xf numFmtId="0" fontId="' + f + '" fillId="' + fl + '" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment vertical="top"' + (w ? ' wrapText="1"' : '') + '/></xf>').join('') +
+      '</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+    const wb = HEAD + '<workbook xmlns="' + NS + '" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Tracker" sheetId="1" r:id="rId1"/></sheets><definedNames><definedName name="_xlnm._FilterDatabase" localSheetId="0" hidden="1">Tracker!$A$' + H + ':$' + last + '$' + end + '</definedName></definedNames></workbook>';
+    const R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+    const PR = 'http://schemas.openxmlformats.org/package/2006/relationships';
+    const CT = 'application/vnd.openxmlformats-officedocument.spreadsheetml.';
+    return XL.zip([
+      ['[Content_Types].xml', HEAD + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="' + CT + 'sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="' + CT + 'worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="' + CT + 'styles+xml"/></Types>'],
+      ['_rels/.rels', HEAD + '<Relationships xmlns="' + PR + '"><Relationship Id="rId1" Type="' + R + '/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+      ['xl/workbook.xml', wb],
+      ['xl/_rels/workbook.xml.rels', HEAD + '<Relationships xmlns="' + PR + '"><Relationship Id="rId1" Type="' + R + '/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="' + R + '/styles" Target="styles.xml"/></Relationships>'],
+      ['xl/worksheets/sheet1.xml', sh],
+      ['xl/styles.xml', styles],
+    ]);
+  };
+  return XL;
+})();
+</script>
+<script>
+window.SCT = {key: 'state', dir: 1, filter: 'all', q: '', party: 'both'};
+dash.calc('tri_counts', {
+  inputs: ['states'],
+  title: 'Trifecta and flip counts',
+  description: 'Counts trifectas before and after, and offices that change party.',
+  fn: (states) => {
+    const n = (k, v) => states.filter((s) => s[k] === v).length;
+    const flips = (k) => states.filter((s) => s[k] !== s[k + '_prev']).length;
+    return [{dem: n('trifecta', 'Dem'), rep: n('trifecta', 'Rep'), divided: n('trifecta', 'Divided'),
+      dem_prev: n('trifecta_prev', 'Dem'), rep_prev: n('trifecta_prev', 'Rep'), divided_prev: n('trifecta_prev', 'Divided'),
+      gov_flips: flips('gov'), chamber_flips: flips('house') + flips('senate')}];
+  }
+});
+dash.calc('changes', {
+  inputs: ['states'],
+  title: 'Offices changing party',
+  description: 'For each state, how many of governor, house and senate change party.',
+  fn: (states) => states.map((s) => ({state: s.state, changes: ['gov', 'house', 'senate'].filter((k) => s[k] !== s[k + '_prev']).length}))
+});
+dash.draw('cnt', (el) => {
+  const d = dash.data('tri_counts');
+  const r = d.status === 'ok' && d.data && d.data[0];
+  el.textContent = r ? String(r[el.dataset.field]) : '—';
+});
+window.SCT.view = () => {
+  const d = dash.data('states'), c = dash.data('changes');
+  if (d.status !== 'ok') return null;
+  const ch = new Map((c.status === 'ok' ? c.data : []).map((r) => [r.state, Number(r.changes)]));
+  const S = window.SCT, q = S.q.trim().toLowerCase();
+  const isNew = (r) => r.trifecta !== r.trifecta_prev && r.trifecta !== 'Divided';
+  const lost = (r) => r.trifecta_prev !== 'Divided' && r.trifecta !== r.trifecta_prev;
+  const lead = (r) => [r.gov_status, r.house_status, r.senate_status].includes('leading');
+  let rows = d.data.map((r) => Object.assign({}, r, {chg: ch.get(r.state) || 0}));
+  rows = rows.filter((r) => {
+    if (S.filter === 'changes' && !(r.chg > 0 || r.trifecta !== r.trifecta_prev)) return false;
+    if (S.filter === 'tri' && !(r.trifecta === 'Dem' || r.trifecta === 'Rep')) return false;
+    if (S.filter === 'new' && !isNew(r)) return false;
+    if (S.filter === 'lost' && !lost(r)) return false;
+    if (S.filter === 'tsm' && !((r.trifecta === 'Dem' || r.trifecta === 'Rep') && r.house_sm && r.senate_sm)) return false;
+    if (S.filter === 'uncalled' && (!lead(r) || isNew(r) || lost(r))) return false;
+    if (S.party !== 'both') {
+      const p = S.party;
+      const ok = S.filter === 'lost' ? r.trifecta_prev === p : (S.filter === 'tri' || S.filter === 'new' || S.filter === 'tsm') ? r.trifecta === p : [r.gov, r.house, r.senate].includes(p);
+      if (!ok) return false;
+    }
+    if (q && !(r.state + ' ' + (r.note || '')).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const rank = {Dem: 0, Rep: 1, Divided: 2, Tied: 3, Coalition: 3, Unicameral: 4, Nonpartisan: 4};
+  rows.sort((a, b) => {
+    let v = 0;
+    if (S.key === 'state') v = a.state.localeCompare(b.state);
+    else if (S.key === 'changes') v = a.chg - b.chg;
+    else if (S.key === 'house_shift' || S.key === 'senate_shift') {
+      const an = a[S.key + '_n'], bn = b[S.key + '_n'];
+      if (an == null || bn == null) return (an == null) - (bn == null) || a.state.localeCompare(b.state);
+      v = an - bn;
+    }
+    else if (S.key === 'supermaj') {
+      const sr = (t) => { t = (t || 'None').toLowerCase(); return t.startsWith('lost') ? 0 : /doubt|likely|possible/.test(t) ? 1 : t.startsWith('added') ? 2 : t.startsWith('kept') ? 3 : 4; };
+      v = sr(a.supermaj) - sr(b.supermaj) || (a.supermaj || '').localeCompare(b.supermaj || '');
+    }
+    else {
+      v = (rank[a[S.key]] ?? 9) - (rank[b[S.key]] ?? 9);
+      if (!v) v = (b[S.key] !== b[S.key + '_prev']) - (a[S.key] !== a[S.key + '_prev']);
+    }
+    return v * S.dir || a.state.localeCompare(b.state);
+  });
+  return rows;
+};
+dash.draw('rows', (tb) => {
+  tb.replaceChildren();
+  const rows = window.SCT.view();
+  if (!rows) return;
+  const td = (txt, cls) => { const e = document.createElement('td'); e.textContent = txt; if (cls) e.className = cls; return e; };
+  const pc = (val, prev, status) => {
+    let cls = (val === 'Dem' || val === 'Rep') ? (val !== prev ? (val === 'Dem' ? 'sct-fd' : 'sct-fr') : (val === 'Dem' ? 'sct-d' : 'sct-r')) : 'sct-o';
+    if (status === 'leading') cls += ' sct-lead';
+    if (status === 'not_up') cls += ' sct-nu';
+    if (status === 'expected') cls += ' sct-exp';
+    return cls;
+  };
+  const shc = (n, st) => 'sct-sh' + (n > 0 ? ' sct-d' : n < 0 ? ' sct-r' : ' sct-o') + (st === 'prelim' ? ' sct-lead' : '');
+  for (const r of rows) {
+    const tr = document.createElement('tr');
+    let sc = 'sct-st';
+    if (r.trifecta === 'Dem' || r.trifecta === 'Rep') sc += ' ' + pc(r.trifecta, r.trifecta_prev, '');
+    tr.append(td(r.state, sc), td(r.gov, pc(r.gov, r.gov_prev, r.gov_status)), td(r.house, pc(r.house, r.house_prev, r.house_status) + (r.house_sm ? ' sct-b' : '')),
+      td(r.senate, pc(r.senate, r.senate_prev, r.senate_status) + (r.senate_sm ? ' sct-b' : '')),
+      td(r.house_shift || '\u2014', shc(r.house_shift_n, r.house_shift_status)), td(r.senate_shift || '\u2014', shc(r.senate_shift_n, r.senate_shift_status)),
+      td(r.supermaj || 'None', 'sct-sm' + ((r.supermaj || 'None') === 'None' ? ' sct-o' : '') + (r.supermaj_status === 'expected' ? ' sct-exp' : '')),
+      td(String(r.chg), r.chg ? '' : 'sct-o'), td(r.note || '', 'sct-note'));
+    tb.append(tr);
+  }
+});
+dash.draw('shown', (el) => {
+  const rows = window.SCT.view();
+  el.textContent = rows ? String(rows.length) : '\u2014';
+});
+dash.draw('total', (el) => {
+  const d = dash.data('states');
+  el.textContent = d.status === 'ok' ? String(d.data.length) : '\u2014';
+});
+document.querySelectorAll('.sct-sort').forEach((b) => b.addEventListener('click', () => {
+  const S = window.SCT, k = b.dataset.key;
+  if (S.key === k) S.dir *= -1; else { S.key = k; S.dir = k === 'changes' ? -1 : 1; }
+  document.querySelectorAll('.sct-th').forEach((th) => {
+    const own = th.querySelector('.sct-sort');
+    th.setAttribute('aria-sort', own && own.dataset.key === k ? (S.dir > 0 ? 'ascending' : 'descending') : 'none');
+  });
+  dash.draw('rows');
+  dash.draw('shown');
+}));
+document.querySelectorAll('.sct-f').forEach((b) => b.addEventListener('click', () => {
+  window.SCT.filter = b.dataset.filter;
+  document.querySelectorAll('.sct-f').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  dash.draw('rows');
+  dash.draw('shown');
+}));
+document.querySelectorAll('.sct-tog').forEach((b) => b.addEventListener('click', () => {
+  const on = b.getAttribute('aria-pressed') !== 'true';
+  b.setAttribute('aria-pressed', String(on));
+  document.querySelectorAll('.sct-box').forEach((x) => x.classList.toggle(b.dataset.hide, !on));
+}));
+document.querySelectorAll('.sct-party').forEach((b) => b.addEventListener('click', () => {
+  const order = ['both', 'Rep', 'Dem'];
+  const S = window.SCT;
+  S.party = order[(order.indexOf(S.party) + 1) % order.length];
+  b.querySelectorAll('[data-p]').forEach((x) => { x.hidden = x.dataset.p !== S.party; });
+  b.classList.toggle('sct-p-rep', S.party === 'Rep');
+  b.classList.toggle('sct-p-dem', S.party === 'Dem');
+  b.setAttribute('aria-pressed', String(S.party !== 'both'));
+  dash.draw('rows');
+  dash.draw('shown');
+}));
+const sctKey = ['Key: blue/red text = party unchanged; filled cell = changed party; state name colored = trifecta, filled = new trifecta; bold House/Senate = veto-proof supermajority going forward.', 'Markers: * not called / not final; † not on ballot; ° unconfirmed, expected hold. Shift = net seats gained (unofficial); — = not yet reported.', 'Supermajority = the state’s veto-override share (2/3 or 3/5; 2/3 where a simple majority overrides; NE 33 of 49 to end a filibuster).'];
+const sctDl = (window.claude && typeof window.claude.use === 'function') ? Promise.resolve(window.claude.use('downloads')).catch(() => null) : Promise.resolve(null);
+const sctSave = async (filename, blob) => {
+  const dl = await sctDl;
+  if (dl) return dl.save({filename, data: blob});
+  const url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+};
+document.querySelectorAll('.sct-xl').forEach((b) => b.addEventListener('click', async () => {
+  const msgs = document.querySelectorAll('.sct-xl-msg');
+  msgs.forEach((m) => { m.hidden = true; });
+  const rows = window.SCT.view();
+  if (!rows || !window.SCTXL) { msgs.forEach((m) => { m.hidden = false; }); return; }
+  b.disabled = true;
+  try {
+    const box = document.querySelector('.sct-box'), label = {};
+    document.querySelectorAll('.sct-t thead th').forEach((th) => { label[th.dataset.field] = th.textContent.trim(); });
+    const txt = (sel) => { const e = document.querySelector(sel); return e ? e.textContent.trim() : ''; };
+    const f = [...document.querySelectorAll('.sct-f')].find((x) => x.getAttribute('aria-pressed') === 'true');
+    const p = [...document.querySelectorAll('.sct-party [data-p]')].find((x) => !x.hidden);
+    const S = window.SCT, fl = f ? f.textContent.trim() : 'All states', pl = p ? p.textContent.trim() : 'Party: Both';
+    const view = 'View: ' + fl + ' · ' + pl + (S.q.trim() ? ' · Search: “' + S.q.trim() + '”' : '') + ' · ' + rows.length + (rows.length === 1 ? ' state' : ' states');
+    const blob = window.SCTXL.build(rows, {hideSm: !!box && box.classList.contains('sct-hide-sm'), hideSh: !!box && box.classList.contains('sct-hide-sh'), label, title: txt('.sct-title'), asof: txt('.sct-asof'), view, key: sctKey});
+    const slug = (fl + (S.party !== 'both' ? ' ' + S.party : '')).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    await sctSave('state-control-2026-' + slug + '.xlsx', blob);
+  } catch (e) {
+    if (!e || e.code !== 'declined') msgs.forEach((m) => { m.hidden = false; });
+  } finally {
+    b.disabled = false;
+  }
+}));
+document.querySelectorAll('.sct-q').forEach((i) => i.addEventListener('input', () => { window.SCT.q = i.value; dash.draw('rows'); dash.draw('shown'); }));
+dash._runAll();
+</script>
+</div>
+</body>
+</html>
